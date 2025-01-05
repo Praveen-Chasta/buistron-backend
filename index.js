@@ -9,32 +9,20 @@ dotenv.config();
 const { Bookmark, User } = require('./db/db');
 
 
-const allowedOrigins = [
-    'https://your-frontend.vercel.app', 
-    'http://localhost:3000'            
-];
-
-
 const corsOptions = {
-    origin: function (origin, callback) {
-      
-        if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
-            callback(null, true); 
-        } else {
-            callback(new Error('Not allowed by CORS')); 
-        }
-    },
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],  
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true,  
+  origin: 'http://localhost:5173',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
 };
-
 
 app.use(cors(corsOptions));
 
 app.use(express.json());
 
-app.post('/api/bookmarks', async (req, res) => {
+
+
+app.post(`/api/bookmarks`, async (req, res) => {
   try {
     const { articleId, title, content, author, email } = req.body;
 
@@ -60,7 +48,7 @@ app.post('/api/bookmarks', async (req, res) => {
   }
 });
 
-app.delete('/api/bookmarks/:id', async (req, res) => {
+app.delete(`/api/bookmarks/:id`, async (req, res) => {
     try {
         const { id } = req.params; 
 
